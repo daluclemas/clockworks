@@ -13,6 +13,13 @@ let ada=document.querySelector('.ada');
 let sync=document.querySelector('.fa-sync-alt');
 let amPm=document.querySelector('.am');
 
+let timezone=document.querySelector('.timezone');
+let days=document.querySelector('.days');
+let day=document.querySelector('.day');
+let week=document.querySelector('.week');
+
+
+
 
 
 
@@ -119,6 +126,9 @@ const changes=()=>{
 
     let dateForm=new Date();
     let hrs=dateForm.getHours();
+    let dayS=dateForm.getDay();
+
+    day.textContent=dayS;
     
     if(hrs >= 18){
         changeNight(spanGreeting,greeting);
@@ -140,17 +150,42 @@ const timeShow=()=>{
 
     let dateForm=new Date();
     let hrs=dateForm.getHours();
-    let mins=dateForm.getMinutes();
-    let day=dateForm.getSeconds();
+    let mins=dateForm.getMinutes(); 
 
     mins=(mins<10)? '0'+mins : mins;
     hrs=(hrs<10)? '0'+hrs : hrs;
     timeDisplay.textContent=`${hrs}:${mins}`;
-    console.log(day);
-
-
+ 
     setTimeout(timeShow,1000)
 };
 
 timeShow();
+
+const toggleChanges=()=>{
+
+    let dateForm=new Date("December 31, 2020 00:01:00");
+    let now=new Date();
+    let total=dateForm.getTime()-now.getTime();
+
+    let seconds= Math.floor(total/1000);
+    let mins= Math.floor(seconds/60);
+    let hours= Math.floor(mins/60);
+    let daY= Math.floor(hours/24);
+    let weeks=Math.floor(daY/7);
+    week.textContent=weeks;
+
+    if(total<=0){
+        clearTimeout(timer);
+        days.textContent='NEW YEAR';
+
+    }else{
+        days.textContent=daY;
+    }
+    
+
+    let timer=setTimeout(toggleChanges,1000);
+
+}
+
+toggleChanges();
 
